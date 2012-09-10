@@ -29,12 +29,19 @@ plugins=(<%= config['zsh']['plugins'].join(' ') %>)
 source $ZSH/oh-my-zsh.sh
 
 export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/X11/bin
+export PATH=$PATH:~/Developer/SDKs/android-sdk-macosx/tools:~/Developer/SDKs/android-sdk-macosx/platform-tools
 export EDITOR='<%= config['zsh']['editor'] %>'
 
-# Set window title
-precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+export PATH=$PATH:<%= build_path %>/<%= config['scripts']['scripts'] %>
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# Set Java version to 1.7
+export JAVA_HOME=`/usr/libexec/java_home`
+
+# Set window title
+precmd () {
+  print -Pn "\e]0;%n@%m: %~\a"
+  z --add "$(pwd -P)"
+}
 
 # Unhide ~/Library
 chflags nohidden /Users/<%= config['username'] %>/Library/
@@ -64,6 +71,9 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 #    echo "Today in history:"
 #    cat /usr/share/calendar/calendar.history | grep `date +'%m/%d'` | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- | head -n 1 | awk '{print "\t", $0}'
 # }
+
+# RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 <% if config['zsh']['vars'] %>
   <% config['zsh']['vars'].each_pair do |name, value| %>

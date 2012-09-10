@@ -92,6 +92,10 @@ alias startadb='/Developer/SDKs/android-sdk-macosx/platform-tools/adb start-serv
 alias stopadb='/Developer/SDKs/android-sdk-macosx/platform-tools/adb kill-server'
 alias logcat='/Developer/SDKs/android-sdk-macosx/platform-tools/adb -d logcat'
 
+# mongo
+alias mongostart='mongod run --config /usr/local/etc/mongod.conf'
+alias mongostop='kill -2 `ps aux | grep [m]ongo* | awk '{ print $2 }'`'
+
 # ps & other stuff
 alias psg="ps ax | grep -v grep | grep $1"
 alias topmem='ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 | tail -10'  # top 10 memory processes
