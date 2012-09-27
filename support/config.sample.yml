@@ -7,7 +7,7 @@ symlinks_path: "<%= ENV['HOME'] %>"
 username: YOUR_USERNAME
 
 # These paths will be chmodded
-scripts: 
+scripts:
   git:           "git"
   scripts:       "scripts"
 
@@ -26,6 +26,7 @@ symlinks:
   rdebugrc:      .rdebugrc
   rvmrc:         .rvmrc
   pryrc:         .pryrc
+  templates:     .templates
 
 zsh:
   editor: 'mate -w' # or 'subl'
