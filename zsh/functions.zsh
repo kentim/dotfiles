@@ -1,3 +1,39 @@
+# Create a dir and cd into it
+function mkd() {
+  mkdir -p "$@" && cd "$@"
+}
+
+# Create a data-url for the specified file
+function dataurl() {
+  local mimeType=$(file -b --mime-type "$1")
+  if [[ $mimeType == text/* ]]; then
+    mimeType="${mimeType};charset=utf-8"
+  fi
+  echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+  local port="${1:-8000}"
+  sleep 1 && open "http://localhost:${port}/" &
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+# create a sublime project in the current dir based on template $1
+function project() {
+  if test "$1" = ""; then
+    echo "Please specify a project template. Available templates:"
+    echo ""
+    ls -1 "$HOME/.templates/projects/"
+  else
+    cp "$HOME/.templates/projects/$1.sublime-project" "./${PWD##*/}.sublime-project" && sp
+  fi
+}
+
+
+# tail a log
 function tlog() {
   if test "$1" = ""; then
     tail -f log/development.log
@@ -6,6 +42,7 @@ function tlog() {
   fi
 }
 
+# dump the table names to $OUT
 function schema() {
   if test "$1" = ""; then
     grep 'create_table' db/schema.rb | cut -d \" -f2
@@ -14,6 +51,7 @@ function schema() {
   fi
 }
 
+# track a git branch
 function track_git_branch() {
   if test "`current_branch`" = ""; then
     echo 'Not in git repo.';
@@ -33,6 +71,7 @@ function rvm_unicode_symbol() {
   fi
 }
 
+# Auto feature branch script from abuijs
 function feature() {
   if test "-n" = "$1"; then
     if test "" = "$2"; then

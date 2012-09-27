@@ -24,7 +24,9 @@ alias tophist="history | awk '{print $4}' | sort | uniq -c | sort -rn | head"
 alias 'h?'='history | grep $1'
 
 # Sublime Text 2
-alias sub="subl $1"
+alias st='subl'
+alias stt='subl .'
+alias sp='subl `find . -name "*.sublime-project"`'
 
 # Get OS X Software Updates, update Homebrew itself, and upgrade installed Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade'
@@ -32,9 +34,15 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade'
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
 # Empty the Trash on all mounted volumes and the main HDD
 # Also, clear Apple’s System Logs to improve shell startup speed
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+
+# ROT13-encode text. Works for decoding, too! ;)
+alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 
 # One of @janmoesen’s ProTip™s
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
@@ -170,7 +178,7 @@ alias gitx='gitx --commit'
 
 ### FUN STARTS HERE ###
 
-# Awesome stuff I never really use
+# Awesome stuff I never really use but keep because of http://xkcd.com/530/
 # Grabbed from https://github.com/mathiasbynens/dotfiles
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
