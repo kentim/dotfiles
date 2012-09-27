@@ -26,9 +26,9 @@ function project() {
   if test "$1" = ""; then
     echo "Please specify a project template. Available templates:"
     echo ""
-    ls -1 "$HOME/.templates/projects/"
+    ls -1 -p "$HOME/.templates/projects/" | grep -v /
   else
-    cp "$HOME/.templates/projects/$1.sublime-project" "./${PWD##*/}.sublime-project" && sp
+    cp -f "$HOME/.templates/projects/$1.sublime-project" "./${PWD##*/}.sublime-project" && sp
   fi
 }
 
