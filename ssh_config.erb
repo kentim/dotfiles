@@ -1,20 +1,22 @@
-<% config['ssh'].each do |host| %>
-  Host <%= host['name'] %>
-  HostName <%= host['host'] %>
-  User <%= host['user'] %>
+<% if config['ssh'] %>
+  <% config['ssh'].each do |host| %>
+    Host <%= host['name'] %>
+    HostName <%= host['host'] %>
+    User <%= host['user'] %>
 
-  <% if host['identity'] %>
-    IdentityFile <%= host['identity'] %>
-  <% end %>
-
-  <% if host['alive'] %>
-    <% if host['alive']['interval'] %>
-      ServerAliveInterval <%= host['alive']['interval'] %>
+    <% if host['identity'] %>
+      IdentityFile <%= host['identity'] %>
     <% end %>
 
-    <% if host['alive']['count'] %>
-      ServerAliveCountMax <%= host['alive']['count'] %>
-    <% end %>
-  <% end %>
+    <% if host['alive'] %>
+      <% if host['alive']['interval'] %>
+        ServerAliveInterval <%= host['alive']['interval'] %>
+      <% end %>
 
+      <% if host['alive']['count'] %>
+        ServerAliveCountMax <%= host['alive']['count'] %>
+      <% end %>
+    <% end %>
+
+  <% end %>
 <% end %>

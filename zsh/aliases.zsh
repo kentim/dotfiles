@@ -5,6 +5,8 @@ alias lth='ls -tG|head'
 alias lh='ls -SGhl | less'
 alias tf='tail -f -n $1'
 
+alias clr='clear;echo "Currently logged in on $(tty), as $(whoami) in directory $(pwd)."'
+
 # general shortcuts
 alias mv='mv -i'
 alias md=mkdir
@@ -173,7 +175,7 @@ alias gba='git branch -a'
 compdef _git gba=git-branch
 
 alias undopush="git push -f origin HEAD^:master" # Undo a `git push`
-alias hub="open \`git config -l | grep 'remote.origin.url' | sed -En \ 's/remote.origin.url=git(@|:\/\/)github.com(:|\/)(.+)\/(.+).git/https:\/\/github.com\/\3\/\4/p'\`"
+alias hub="open \`git config -l | grep 'remote.origin.url' | sed -En \ 's/remote.origin.url=git(@|:\/\/)github.com(:|\/)(.+)\/(.+).git/https:\/\/github.com\/\3\/\4/tree/\`git rev-parse --abbrev-ref HEAD\`/p'\`"
 alias gitx='gitx --commit'
 
 ### FUN STARTS HERE ###
@@ -182,8 +184,6 @@ alias gitx='gitx --commit'
 # Grabbed from https://github.com/mathiasbynens/dotfiles
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
-alias hax="growlnotify -a 'Activity Monitor' -m 'WTF R U DOIN'"
 
 # Fun stuff
 alias starwars="telnet towel.blinkenlights.nl"
-

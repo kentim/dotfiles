@@ -1,0 +1,25 @@
+#!/bin/sh
+
+github_remote=$(git remote -v | grep -Eo 'github.com[:/][^.]+' | head -1)
+branch=$(git symbolic-ref HEAD 2>/dev/null | awk '{gsub("refs/heads/","")}1')
+
+if [ -z $github_remote ]
+then
+    echo "No GitHub remote"
+    exit
+fi
+
+github_url="https://${github_remote/://}"
+
+if [ ! -z $1 ]
+then
+    sha=$(git rev-parse $1)
+    github_url="${github_url}/commit/$sha"
+fi
+
+if [ -z $1 ] && [ ! -z $branch ]
+then
+  github_url="${github_url}/tree/${branch}/"
+fi
+
+open $github_url

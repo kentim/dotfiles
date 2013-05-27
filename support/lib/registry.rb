@@ -1,6 +1,6 @@
 class Registry
   def initialize(config_path)
-    @config = YAML.load(ERB.new(File.read(config_path)).result(binding))    
+    @config = YAML.load(ERB.new(File.read(config_path)).result(binding))
   end
 
   def dotfiles_path
@@ -14,7 +14,7 @@ class Registry
   def symlinks_path
     config['symlinks_path']
   end
-  
+
   def symlinks
     config['symlinks']
   end
@@ -28,7 +28,13 @@ class Registry
   end
 
   def namespaces
-    ::Rake.application.tasks.map(&:name).select{|t| t.include?(':')}.map{|t| t.split(':').first}.uniq
+    tnames = ::Rake.application.tasks.map(&:name)
+    ntnames = tnames.select{|t| t.include?(':')}
+    nnames = ntnames.map do |t|
+      parts = t.split(':')
+      parts.pop
+      parts.join(':')
+    end.uniq
   end
 
   def task(name)
