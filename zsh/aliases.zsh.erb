@@ -140,8 +140,11 @@ alias local_ports='sudo nmap -sT -O localhost'
 alias psqlstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias psqlstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 
+# Ciber VPN
+alias cibervpn='sudo openconnect --authgroup=<%= config["vpn"]["auth_group"] %> -u <%= config["vpn"]["user"] %> -p <%= config["vpn"]["pass"] %> --cafile=<%= config["vpn"]["certificate_file"] %> <%= config["vpn"]["domain"] %>'
+
 # GIT
-alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+alias gl=\"git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 compdef _git gl=git-log
 
 alias gpr='git pull --rebase'

@@ -43,9 +43,6 @@ precmd () {
   z --add "$(pwd -P)"
 }
 
-# Unhide ~/Library
-chflags nohidden /Users/<%= config['username'] %>/Library/
-
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 # # detect interactive shell
