@@ -37,7 +37,7 @@ class Manager
       end
     end
   end
-  
+
   def each_permissions_job(&block)
     @registry.scripts.each_pair do |name, dir|
       path = "#{@registry.build_path}/#{dir}"

@@ -8,7 +8,8 @@ require 'fileutils'
   require "./support/lib/#{dep}"
 end
 
-ENV['DEBUG'] = 'false'
+ENV['DEBUG'] = 'true'
+#ENV['DRY'] = 'true'
 
 registry = Registry.new(CONFIG_PATH)
 logger   = Logger.new(:silent => !ENV['DEBUG'])

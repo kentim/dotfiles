@@ -5,6 +5,13 @@ alias lth='ls -tG|head'
 alias lh='ls -SGhl | less'
 alias tf='tail -f -n $1'
 
+if $(gls &>/dev/null)
+then
+  alias ls="gls -alG --color"
+  alias ltr="gls -ltrG --color"
+  alias lth="gls -tG --color|head"
+fi
+
 alias clr='clear;echo "Currently logged in on $(tty), as $(whoami) in directory $(pwd)."'
 
 # general shortcuts
@@ -97,10 +104,9 @@ alias rgrep='rake routes |grep '
 alias mroutes='rroutes | subl'
 
 # mobile
-alias titanium='~/Library/Application\ Support/Titanium/mobilesdk/osx/1.8.2/titanium.py'
-alias startadb='/Developer/SDKs/android-sdk-macosx/platform-tools/adb start-server'
-alias stopadb='/Developer/SDKs/android-sdk-macosx/platform-tools/adb kill-server'
-alias logcat='/Developer/SDKs/android-sdk-macosx/platform-tools/adb -d logcat'
+alias startadb='~/Developer/SDKs/android-sdk-macosx/platform-tools/adb start-server'
+alias stopadb='~/Developer/SDKs/android-sdk-macosx/platform-tools/adb kill-server'
+alias logcat='~/Developer/SDKs/android-sdk-macosx/platform-tools/adb -d logcat'
 
 # mongo
 alias mongostart='mongod run --config /usr/local/etc/mongod.conf'
@@ -136,6 +142,13 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 # show what ports are open locally
 alias local_ports='sudo nmap -sT -O localhost'
 
+# Malmberg stuff
+alias deploymbo="curl -s http://admin:admin@webistrano.tst.malmberg.nl/projects/2/stages/{1,17}/deployments -d deployment\[task\]=deploy && open http://webistrano.tst.malmberg.nl"
+alias deploymboacc="curl -s http://admin:admin@webistrano.tst.malmberg.nl/projects/2/stages/17/deployments -d deployment\[task\]=deploy && open http://webistrano.tst.malmberg.nl"
+alias deploymboa="curl -s http://admin:admin@webistrano.tst.malmberg.nl/projects/6/stages/{4,18}/deployments -d deployment\[task\]=deploy && open http://webistrano.tst.malmberg.nl"
+alias deployvo="curl -s http://admin:admin@webistrano.tst.malmberg.nl/projects/4/stages/{3,15}/deployments -d deployment\[task\]=deploy && open http://webistrano.tst.malmberg.nl"
+alias deployvoa="curl -s http://admin:admin@webistrano.tst.malmberg.nl/projects/7/stages/{5,16}/deployments -d deployment\[task\]=deploy && open http://webistrano.tst.malmberg.nl"
+
 # Postgres
 alias psqlstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias psqlstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
@@ -144,9 +157,6 @@ alias psqlstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/se
 alias cibervpn='sudo openconnect --authgroup=<%= config["vpn"]["auth_group"] %> -u <%= config["vpn"]["user"] %> -p <%= config["vpn"]["pass"] %> --cafile=<%= config["vpn"]["certificate_file"] %> <%= config["vpn"]["domain"] %>'
 
 # GIT
-alias gl=\"git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
-compdef _git gl=git-log
-
 alias gpr='git pull --rebase'
 compdef _git glr=git-pull
 
@@ -176,6 +186,9 @@ compdef _git gb=git-branch
 
 alias gba='git branch -a'
 compdef _git gba=git-branch
+
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%='<'%>%an> %Creset' --abbrev-commit --date=relative"
+compdef _git gl=git-log
 
 alias undopush="git push -f origin HEAD^:master" # Undo a `git push`
 alias hub="open \`git config -l | grep 'remote.origin.url' | sed -En \ 's/remote.origin.url=git(@|:\/\/)github.com(:|\/)(.+)\/(.+).git/https:\/\/github.com\/\3\/\4/tree/\`git rev-parse --abbrev-ref HEAD\`/p'\`"
