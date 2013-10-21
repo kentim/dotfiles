@@ -6,6 +6,11 @@ function get-pass() {
     awk -F\" '/password:/ {print $2}';
 }
 
+# mojombo http://gist.github.com/180587
+function psg {
+  ps wwwaux | egrep "($1|%CPU)" | grep -v grep
+}
+
 # Show how much RAM application uses.
 # $ ram safari
 # # => safari uses 154.69 MBs of RAM.
@@ -27,6 +32,52 @@ function ram() {
       echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
     fi
   fi
+}
+
+# Syntax-highlight JSON strings or files
+# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
+function json() {
+  if [ -t 0 ]; then # argument
+    python -mjson.tool <<< "$*" | pygmentize -l javascript
+  else # pipe
+    python -mjson.tool | pygmentize -l javascript
+  fi
+}
+
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+  cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+}
+
+# Add note to Notes.app (OS X 10.8)
+# Usage: `note 'title' 'body'` or `echo 'body' | note`
+# Title is optional
+function note() {
+  local title
+  local body
+  if [ -t 0 ]; then
+    title="$1"
+    body="$2"
+  else
+    title=$(cat)
+  fi
+  osascript >/dev/null <<EOF
+tell application "Notes"
+  tell account "iCloud"
+    tell folder "Notes"
+      make new note with properties {name:"$title", body:"$title" & "<br><br>" & "$body"}
+    end tell
+  end tell
+  quit
+end tell
+EOF
+}
+
+# Find files and exec commands at them.
+# $ find-exec .coffee cat | wc -l
+# # => 9762
+function find-exec() {
+  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
 }
 
 # Count code lines in some directory.
@@ -54,22 +105,9 @@ function loc() {
   echo "${fg[blue]}Total${reset_color} lines of code: ${fg[green]}$total${reset_color}"
 }
 
-
-function title() {
-  # escape '%' chars in $1, make nonprintables visible
-  a=${(V)1//\%/\%\%}
-
-  # Truncate command, and join lines.
-  a=$(print -Pn "%40>...>$a" | tr -d "\n")
-
-  case $TERM in
-  screen)
-    print -Pn "\ek$a:$3\e\\" # screen title (in ^A")
-    ;;
-  xterm*|rxvt)
-    print -Pn "\e]2;$2\a" # plain xterm title ($3 for pwd)
-    ;;
-  esac
+# All the dig info
+function digga() {
+  dig +nocmd "$1" any +multiline +noall +answer
 }
 
 # Create a dir and cd into it
@@ -220,4 +258,10 @@ function feature() {
  -d(elete) : delete the feature branch both locally AND remote. Do this AFTER this feature is deployed to production.
              usage: feature -d [feature_branch]"
   fi
+}
+
+# 4 lulz.
+function compute() {
+  while true; do head -n 100 /dev/urandom; sleep 0.1; done \
+    | hexdump -C | grep "ca fe"
 }

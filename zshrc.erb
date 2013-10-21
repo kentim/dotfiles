@@ -28,7 +28,7 @@ plugins=(<%= config['zsh']['plugins'].join(' ') %>)
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/X11/bin
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/X11/bin
 export PATH=$PATH:/usr/local/share/npm/bin:$HOME/Developer/SDKs/android-sdk-macosx/tools:$HOME/Developer/SDKs/android-sdk-macosx/platform-tools
 export EDITOR='<%= config['zsh']['editor'] %>'
 
@@ -48,7 +48,6 @@ fi
 
 # Set window title
 precmd () {
-  title "zsh" "%m" "%55<...<%='<'%>%~"
   print -Pn "\e]0;%n@%m: %~\a"
   z --add "$(pwd -P)"
 }

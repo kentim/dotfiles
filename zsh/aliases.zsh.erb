@@ -12,7 +12,27 @@ then
   alias lth="gls -tG --color|head"
 fi
 
+alias please=sudo
+
+# global aliases
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g L='| less'
+alias -g M='| most' # brew install most
+
+# suffix commands
+alias -s epub="open"
+alias -s pdf="open"
+alias -s PDF="open"
+alias -s plist="plutil"
+
+alias grep='grep --color=auto'
+alias ping='ping -c 5'
+
 alias clr='clear;echo "Currently logged in on $(tty), as $(whoami) in directory $(pwd)."'
+
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
 # general shortcuts
 alias mv='mv -i'
@@ -25,8 +45,7 @@ alias ducks='du -cks * | sort -rn|head -11' # Lists the size of all the folders
 alias todo='grep -ni TODO *'
 alias rtodo='grep -niR TODO *'
 
-alias drop="cd ~/Dropbox"
-alias reload="source ~/.zshrc"
+alias reload="source ~/.zshrc;clr"
 
 # History
 alias tophist="history | awk '{print $4}' | sort | uniq -c | sort -rn | head"
@@ -79,11 +98,6 @@ alias rct='rails c test'
 alias rcp='rails c production'
 alias rg='rails generate'
 
-# oldschool RoR shortcuts
-alias rs2='script/server'
-alias rc2='script/console'
-alias rg2='script/generate'
-
 # testing shortcuts
 alias rt='rake --trace'
 alias rtt='rake -T'
@@ -113,7 +127,7 @@ alias mongostart='mongod run --config /usr/local/etc/mongod.conf'
 alias mongostop='kill -2 `ps aux | grep [m]ongo* | awk '{ print $2 }'`'
 
 # ps & other stuff
-alias psg="ps ax | grep -v grep | grep $1"
+alias psgr="ps -aef | grep -v grep | grep $1"
 alias topmem='ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 | tail -10'  # top 10 memory processes
 alias topcpu='ps -eo pmem,pcpu,rss,vsize,args | sort -k 2 | tail -10'  # top 10 cpu processes
 
@@ -138,6 +152,19 @@ alias whois="whois -h whois-servers.net"
 # View HTTP traffic
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# Flush Directory Service cache
+alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Kill all the tabs in Chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
 # show what ports are open locally
 alias local_ports='sudo nmap -sT -O localhost'
