@@ -80,16 +80,6 @@ done
 # Full site to PNG
 alias pngsite="/usr/local/bin/webkit2png $1"
 
-#rvm
-alias rvmdef='rvm use default'
-alias r91='rvm use 1.9.1'
-alias r9h='rvm use 1.9.2'
-alias r93='rvm use 1.9.3'
-alias r18='rvm use 1.8.7'
-alias rj='rvm use jruby'
-alias rsys='rvm use system'
-alias rrub='rvm use rubinius'
-
 # ruby & rails shortcuts
 alias annotate='annotate --position before --exclude tests,fixtures'
 alias rs='rails s'
@@ -168,6 +158,12 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 
 # show what ports are open locally
 alias local_ports='sudo nmap -sT -O localhost'
+alias openports='sudo lsof -n -i4TCP | grep LISTEN'
+
+# Stuff for ANWB
+alias static="grunt --repo mobiel;mkdir ~/Code/Work/ANWB/staticbuilder/build/repositories/mobiel/m;ln -s ~/Code/Work/ANWB/staticbuilder/build/repositories/mobiel/ ~/Code/Work/ANWB/staticbuilder/build/repositories/mobiel/m/static"
+alias varnish="sudo varnishd -f /usr/local/etc/varnish/anwb.vcl -s malloc,200M"
+alias killvarnish="sudo pkill varnishd"
 
 # Malmberg stuff
 alias deploymbo="curl -s http://admin:admin@webistrano.tst.malmberg.nl/projects/2/stages/{1,17}/deployments -d deployment\[task\]=deploy && open http://webistrano.tst.malmberg.nl"
@@ -205,6 +201,9 @@ compdef _git gps=git-push
 alias gpm='git push origin master'
 compdef _git gpm=git-push
 
+alias gc='git commit'
+compdef _git gc=git-commit
+
 alias gco='git checkout'
 compdef _git gco=git-checkout
 
@@ -220,6 +219,9 @@ compdef _git gl=git-log
 alias undopush="git push -f origin HEAD^:master" # Undo a `git push`
 alias hub="open \`git config -l | grep 'remote.origin.url' | sed -En \ 's/remote.origin.url=git(@|:\/\/)github.com(:|\/)(.+)\/(.+).git/https:\/\/github.com\/\3\/\4/tree/\`git rev-parse --abbrev-ref HEAD\`/p'\`"
 alias gitx='gitx --commit'
+
+# open the iPhone sim
+alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 
 ### FUN STARTS HERE ###
 

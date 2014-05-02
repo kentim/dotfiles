@@ -24,7 +24,6 @@ symlinks:
   todo:          .todo
   ssh_config:    .ssh/config
   rdebugrc:      .rdebugrc
-  rvmrc:         .rvmrc
   pryrc:         .pryrc
   templates:     .templates
 

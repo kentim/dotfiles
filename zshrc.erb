@@ -30,12 +30,18 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/X11/bin
 export PATH=$PATH:/usr/local/share/npm/bin:$HOME/Developer/SDKs/android-sdk-macosx/tools:$HOME/Developer/SDKs/android-sdk-macosx/platform-tools
+export PATH=$PATH:$HOME/Developer/Java/apache-maven-3.1.1/bin
+export PATH=$PATH:$HOME/Developer/Java/apache-ant-1.9.3/bin
+export PATH=$PATH:$HOME/Developer/SDKs/android-ndk-r9d
+export PATH=$PATH:$HOME/Developer/SDKs/android-ndk-r9d/toolchains/arm-dl-rmsdk-toolchain/arm-linux-androideabi/bin
 export EDITOR='<%= config['zsh']['editor'] %>'
 
 export PATH=$PATH:<%= build_path %>/<%= config['scripts']['scripts'] %>
 
 export ANDROID_SDK=$HOME/Developer/SDKs/android-sdk-macosx
-export MAVEN_HOME=/usr/share/java/maven-3.0.4
+export ANDROID_NDK=$HOME/Developer/SDKs/android-ndk-r9d
+export MAVEN_HOME=$HOME/Developer/Java/apache-maven-3.1.1
+export M2_HOME=$MAVEN_HOME
 
 # Set Java version to 1.7
 export JAVA_HOME=`/usr/libexec/java_home`
@@ -53,8 +59,10 @@ precmd () {
 }
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-# RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# RBENV
+export PATH=$HOME/.rbenv/bin:$PATH
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 <% if config['zsh']['vars'] %>
   <% config['zsh']['vars'].each_pair do |name, value| %>
