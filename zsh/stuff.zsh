@@ -8,7 +8,7 @@ set -o notify
 unset MAILCHECK
 
 # Setup some custom stuff
-source ~/.ec2config
+# source ~/.ec2config
 
 # Dunno where else to put this
 function most_useless_use_of_zsh {

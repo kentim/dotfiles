@@ -1,2 +1,2 @@
 # Initialize rbenv
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"

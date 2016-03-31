@@ -176,9 +176,6 @@ alias deployvoa="curl -s http://admin:admin@webistrano.tst.malmberg.nl/projects/
 alias psqlstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias psqlstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 
-# Ciber VPN
-alias cibervpn='sudo openconnect --authgroup=<%= config["vpn"]["auth_group"] %> -u <%= config["vpn"]["user"] %> -p <%= config["vpn"]["pass"] %> --cafile=<%= config["vpn"]["certificate_file"] %> <%= config["vpn"]["domain"] %>'
-
 # GIT
 alias gpr='git pull --rebase'
 compdef _git glr=git-pull
@@ -232,3 +229,5 @@ alias pumpitup="osascript -e 'set volume 10'"
 
 # Fun stuff
 alias starwars="telnet towel.blinkenlights.nl"
+
+alias reload="source ~/.zshrc;clr"

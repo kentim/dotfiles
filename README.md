@@ -49,6 +49,11 @@ Removes symlinks too, be careful
     cd ~/dotfiles
     rake cleanup
 
+### iTerm 2
+I use iTerm 2 as my terminal of choise. So I copy the profile from the support directory to:
+
+    ~/Library/Application Support/iTerm2/DynamicProfiles
+
 # License
 Copyright (c) 2011 Maxim Chernyak
 

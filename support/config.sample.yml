@@ -51,6 +51,9 @@ zsh:
     - osx
     - thor
 
+osx:
+  computername: YOUR_COMPUTER_NAME 
+
 git:
   config:
     name: YOUR_NAME
